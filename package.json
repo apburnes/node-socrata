@@ -1,0 +1,23 @@
+{
+  "name": "node-socrata",
+  "version": "0.0.1",
+  "description": "A node.js implementation for the Socrata Socrata Open Data API (SODA)",
+  "main": "y",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "keywords": [
+    "Open",
+    "Data",
+    "Socrata",
+    "API"
+  ],
+  "author": "Andrew Burnes",
+  "license": "ISC",
+  "dependencies": {
+    "rest": "^1.1.1"
+  },
+  "devDependencies": {
+    "tape": "^2.13.3"
+  }
+}
