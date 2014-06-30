@@ -13,7 +13,11 @@
     "API"
   ],
   "author": "Andrew Burnes",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apburnes/node-socrata"
+  },
+  "license": "MIT",
   "dependencies": {
     "rest": "^1.1.1"
   },
