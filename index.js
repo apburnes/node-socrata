@@ -44,8 +44,15 @@ Socrata.prototype.listSources = function(cb) {
 Socrata.prototype.get = function(params, cb) {
 	var client = this.auth;
 	client
-		.then(function(data) {
-			cb(data);
+		.then(function(res) {
+			var response = {
+				headers: res.request.headers,
+				path: res.request.path,
+				method: res.request.method,
+				status: res.status.code
+			};
+			var data = res.entity;
+			cb(null, response, data);
 		})
 }
 

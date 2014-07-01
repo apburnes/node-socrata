@@ -23,9 +23,9 @@ test('Initial Function', function(t) {
 });
 
 test('Get Requested Revenue Data', function(t) {
-  soda.get({}, function(data) {
+  soda.get({}, function(err, response, data) {
     t.equal(typeof data, 'object', 'Responds with requested data.');
-    t.equal(data.status.code, 200, 'Responds with a 200 success status.')
+    t.equal(response.status, 200, 'Responds with a 200 success status.')
     t.end();
-  })
-})
+  });
+});
