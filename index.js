@@ -13,7 +13,7 @@ module.exports = Socrata;
 function Socrata(config) {
 
 	this.config = config;
-  this.config.srcListUrl = srcListUrl;
+  this.config.srcListUrl = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
 	this.config.dataType = config.dataType || 'json';
 
 	var credentials = {
