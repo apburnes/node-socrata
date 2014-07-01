@@ -2,34 +2,36 @@
 
 var _ = require('lodash');
 var request = require('request');
-var Auth = require('./lib/auth');
+var auth = require('./lib/auth');
 var rest = require('rest');
 var interceptor = require('rest/interceptor');
 
-var srcListUrl = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
-
-module.exports = Socrata;
+var SRCLIST = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
 
 function Socrata(config) {
+  if (!(this instanceof Socrata)) {
+    return new Socrata(config)
+  }
 
-	this.config = config;
-  this.config.srcListUrl = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
-	this.config.dataType = config.dataType || 'json';
+  this.config = config || {};
+  this.SRCLIST = SRCLIST;
 
 	var credentials = {
-		hostDomain: config.hostDomain,
-		resource: config.resource,
-		XAppToken: config.XAppToken,
+		hostDomain: config.hostDomain || '',
+		resource: config.resource || '',
+		XAppToken: config.XAppToken || '',
 		secretToken: config.secretToken || ''
 	};
 
-	this.auth = new Auth(credentials);
+  this.credentials = credentials;
+
+  return;
 }
 
 // Get list of Governemts using Socrata
 Socrata.prototype.listSources = function(cb) {
   var opts = {
-    url: this.config.srcListUrl,
+    url: this.SRCLIST,
     headers: {
 			'X-App-Token': this.config.XAppToken
     }
@@ -42,18 +44,13 @@ Socrata.prototype.listSources = function(cb) {
 }
 
 Socrata.prototype.get = function(params, cb) {
-	var client = this.auth;
-	client
-		.then(function(res) {
-			var response = {
-				headers: res.request.headers,
-				path: res.request.path,
-				method: res.request.method,
-				status: res.status.code
-			};
-			var data = res.entity;
-			cb(null, response, data);
-		})
+  if (typeof params === 'function') {
+    cb = params;
+    params = {};
+  }
+
+  auth(this.credentials, params, cb);
+
 }
 
 function prettyList(string) {
@@ -63,3 +60,5 @@ function prettyList(string) {
     return url !== null;
 	});
 }
+
+module.exports = exports = Socrata;
