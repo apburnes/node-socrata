@@ -1,22 +1,32 @@
 {
   "name": "node-socrata",
   "version": "0.0.1",
-  "description": "A node.js implementation for the Socrata Socrata Open Data API (SODA)",
-  "main": "y",
+  "description": "A node.js implementation for the Socrata Open Data API (SODA)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "node test/test.js"
   },
   "keywords": [
     "Open",
+    "Open-Data",
     "Data",
     "Socrata",
+    "SODA",
     "API"
   ],
-  "author": "Andrew Burnes",
+  "author": {
+    "name": "Andrew Burnes",
+    "email": "apburnes@gmail.com",
+    "url": "apburnes.github.io"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apburnes/node-socrata"
+    "url": "git://github.com/apburnes/node-socrata"
   },
+  "homepage": "https://github.com/apburnes/node-socrata",
   "license": "MIT",
   "dependencies": {
     "rest": "^1.1.1",
