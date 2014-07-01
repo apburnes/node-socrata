@@ -2,24 +2,34 @@
 
 var _ = require('lodash');
 var request = require('request');
+var Auth = require('./lib/auth');
 var rest = require('rest');
 var interceptor = require('rest/interceptor');
 
-var srcUrl = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
+var srcListUrl = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
 
 module.exports = Socrata;
 
 function Socrata(config) {
 
 	this.config = config;
-  this.config.srcUrl = srcUrl;
+  this.config.srcListUrl = srcListUrl;
+	this.config.dataType = config.dataType || 'json';
 
+	var credentials = {
+		hostDomain: config.hostDomain,
+		resource: config.resource,
+		XAppToken: config.XAppToken,
+		secretToken: config.secretToken || ''
+	};
+
+	this.auth = new Auth(credentials);
 }
 
 // Get list of Governemts using Socrata
 Socrata.prototype.listSources = function(cb) {
   var opts = {
-    url: this.config.srcUrl,
+    url: this.config.srcListUrl,
     headers: {
 			'X-App-Token': this.config.XAppToken
     }
@@ -29,6 +39,14 @@ Socrata.prototype.listSources = function(cb) {
     var list = prettyList(data)
     cb(_.map(list, function(item) { return item[12][0] }));
   });
+}
+
+Socrata.prototype.get = function(params, cb) {
+	var client = this.auth;
+	client
+		.then(function(data) {
+			cb(data);
+		})
 }
 
 function prettyList(string) {
