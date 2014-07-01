@@ -1,6 +1,6 @@
 {
   "name": "node-socrata",
-  "version": "0.0.12",
+  "version": "0.0.12a",
   "description": "A node.js implementation for the Socrata Open Data API (SODA)",
   "main": "index.js",
   "directories": {

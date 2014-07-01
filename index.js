@@ -13,7 +13,7 @@ function Socrata(config) {
     return new Socrata(config)
   }
 
-  this.config = config || {};
+  config = config || {};
   this.SRCLIST = SRCLIST;
 
 	var credentials = {
@@ -33,7 +33,7 @@ Socrata.prototype.listSources = function(cb) {
   var opts = {
     url: this.SRCLIST,
     headers: {
-			'X-App-Token': this.config.XAppToken
+			'X-App-Token': this.credentials.XAppToken
     }
   }
   request(opts, function(err, res, data) {
