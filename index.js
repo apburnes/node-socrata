@@ -52,7 +52,6 @@ Socrata.prototype.get = function(params, cb) {
 }
 
 function prettyList(data) {
-	// var parsed = JSON.parse(string);
   return _.filter(data, function(item) {
 		var url = item[12][0];
     return url !== null;
