@@ -31,8 +31,7 @@
   "dependencies": {
     "rest": "^1.1.1",
     "through": "~2.3.4",
-    "lodash": "~2.4.1",
-    "request": "~2.36.0"
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "tape": "^2.13.3"

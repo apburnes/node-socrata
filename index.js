@@ -1,10 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var request = require('request');
 var auth = require('./lib/auth');
-var rest = require('rest');
-var interceptor = require('rest/interceptor');
+var client = require('./lib/client');
 
 var SRCLIST = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
 
@@ -31,16 +29,16 @@ function Socrata(config) {
 // Get list of Governemts using Socrata
 Socrata.prototype.listSources = function(cb) {
   var opts = {
-    url: this.SRCLIST,
+    path: this.SRCLIST,
     headers: {
 			'X-App-Token': this.credentials.XAppToken
     }
   }
-  request(opts, function(err, res, data) {
-    if (err) return err;
-    var list = prettyList(data)
-    cb(_.map(list, function(item) { return item[12][0] }));
-  });
+  client(opts)
+    .then(function(res) {
+      var list = prettyList(res.entity.data);
+      cb(null, _.map(list, function(item) { return item[12][0] }))
+    }, cb);
 }
 
 Socrata.prototype.get = function(params, cb) {
@@ -53,9 +51,9 @@ Socrata.prototype.get = function(params, cb) {
 
 }
 
-function prettyList(string) {
-	var parsed = JSON.parse(string);
-  return _.filter(parsed.data, function(item) {
+function prettyList(data) {
+	// var parsed = JSON.parse(string);
+  return _.filter(data, function(item) {
 		var url = item[12][0];
     return url !== null;
 	});
