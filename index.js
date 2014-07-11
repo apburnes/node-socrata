@@ -14,20 +14,21 @@ function Socrata(config) {
   config = config || {};
   this.SRCLIST = SRCLIST;
 
-	var credentials = {
+	this.credentials = {
 		hostDomain: config.hostDomain || '',
 		resource: config.resource || '',
 		XAppToken: config.XAppToken || '',
-		secretToken: config.secretToken || ''
+    clientId: config.clientId || '',
+		clientSecret: config.clientSecret || '',
+    username: config.username || '',
+    password: config.password || ''
 	};
-
-  this.credentials = credentials;
 
   return;
 }
 
 // Get list of Governemts using Socrata
-Socrata.prototype.listSources = function(cb) {
+Socrata.prototype.listSources = function listSources(cb) {
   var opts = {
     path: this.SRCLIST,
     headers: {
@@ -41,13 +42,23 @@ Socrata.prototype.listSources = function(cb) {
     }, cb);
 }
 
-Socrata.prototype.get = function(params, cb) {
+Socrata.prototype.get = function getData(params, cb) {
   if (typeof params === 'function') {
     cb = params;
     params = {};
   }
 
-  auth(this.credentials, params, cb);
+  auth.getAuth(this.credentials, params, cb);
+
+}
+
+Socrata.prototype.post = function postData(data, cb) {
+  if (typeof data === 'function') {
+    cb = data;
+    data = {};
+  }
+
+  auth.postAuth(this.credentials, data, cb);
 
 }
 
