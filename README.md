@@ -82,9 +82,62 @@ soda.get(params, function(err, response, data) {
 
 ```
 
+####'POST' Requests####
+
+To post data to your authorized Socrata tables use the `.post` method which
+takes two arguments: data _(json)_ and a callback function which returns the
+response.
+
+To use the post method, you will have to setup your Socrata username and
+password in the initial config to execute a successful post.
+
+```javascript
+//  Setup and configure the Socrata table to execute a 'POST' request
+var Socrata = require('node-socrata');
+
+var config = {
+  hostDomain: 'https://opendata.socrata.com', // The host domain for the table.
+  resource: 'my-table', // The table where data will be posted.
+  username: process.env.SOCRATA_USERNAME || 'username',
+  password: process.env.SOCRATA_PASSWORD || 'password',
+  XAppToken: process.env.SOCRATA_APP_TOKEN || 'registered-app-token'
+};
+
+// **Note: Make sure to follow the table's existing schema;
+var data = {
+  foo: 'bar'
+};
+
+var soda = new Socrata(config);
+
+// Post that data
+soda.post(data, function(err, response, record) {
+  // handle error, response, and record
+});
+
+```
+
+With a successful post, the callback's __record__ argument will return
+the number of records created, deleted, and updated.  With the post method,
+records will only be created.
+
+```
+Output generated from the record
+
+{ 'By RowIdentifier': 0,
+  'Rows Updated': 0,
+  'Rows Deleted': 0,
+  'Rows Created': 1,
+  Errors: 0,
+  'By SID': 0
+}
+
+```
+
 ####TODO####
-- Add 'Post' method
-- Add OAuth
+- Add 'DELETE' method
+- Add 'PUT' method
+- Add supported data types
 
 ####About####
 by Andrew Burnes - apburnes@gmail.com
