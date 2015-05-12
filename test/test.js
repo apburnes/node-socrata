@@ -15,13 +15,6 @@ var config = {
 
 var soda = new Socrata(config);
 
-test('Initial Function', function(t) {
-  soda.listSources(function(err, data) {
-    t.equal(typeof data, 'object', 'Returns list of API domain urls.');
-    t.end();
-  });
-});
-
 test('Get Requested Revenue Data', function(t) {
   soda.get(function(err, response, data) {
     t.equal(typeof data, 'object', 'Responds with requested data.');

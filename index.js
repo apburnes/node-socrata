@@ -10,7 +10,6 @@ function Socrata(config) {
   }
 
   config = config || {};
-  this.SRCLIST = SRCLIST;
 
   this.credentials = {
     hostDomain: config.hostDomain || '',
