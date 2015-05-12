@@ -10,20 +10,6 @@ $ npm install node-socrata
 ```
 ###Examples###
 
-####List Socrata Datasource Domains####
-To quickly scan a list of Socrata data sources, use
-the __listSources()__  method to see data source domains.
-
-```javascript
-var Socrata = require('node-socrata');
-
-// List the Socrata Open Data API (SODA) data sources
-var soda = new Socrata();
-soda.listSources(function(list) {
-  console.log(list);
-})
-```
-
 ####'GET' Requests####
 
 __Request All Data:__ _default limit: 1000 records_

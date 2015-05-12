@@ -4,8 +4,6 @@ var _ = require('lodash');
 var auth = require('./lib/auth');
 var client = require('./lib/client');
 
-var SRCLIST = 'https://opendata.socrata.com/api/views/6wk3-4ija/rows.json';
-
 function Socrata(config) {
   if (!(this instanceof Socrata)) {
     return new Socrata(config)
@@ -14,32 +12,17 @@ function Socrata(config) {
   config = config || {};
   this.SRCLIST = SRCLIST;
 
-	this.credentials = {
-		hostDomain: config.hostDomain || '',
-		resource: config.resource || '',
-		XAppToken: config.XAppToken || '',
+  this.credentials = {
+    hostDomain: config.hostDomain || '',
+    resource: config.resource || '',
+    XAppToken: config.XAppToken || '',
     clientId: config.clientId || '',
-		clientSecret: config.clientSecret || '',
+    clientSecret: config.clientSecret || '',
     username: config.username || '',
     password: config.password || ''
-	};
+  };
 
   return;
-}
-
-// Get list of Governemts using Socrata
-Socrata.prototype.listSources = function listSources(cb) {
-  var opts = {
-    path: this.SRCLIST,
-    headers: {
-			'X-App-Token': this.credentials.XAppToken
-    }
-  }
-  client(opts)
-    .then(function(res) {
-      var list = prettyList(res.entity.data);
-      cb(null, _.map(list, function(item) { return item[12][0] }))
-    }, cb);
 }
 
 Socrata.prototype.get = function getData(params, cb) {
@@ -49,7 +32,6 @@ Socrata.prototype.get = function getData(params, cb) {
   }
 
   auth.getAuth(this.credentials, params, cb);
-
 }
 
 Socrata.prototype.post = function postData(data, cb) {
@@ -59,14 +41,13 @@ Socrata.prototype.post = function postData(data, cb) {
   }
 
   auth.postAuth(this.credentials, data, cb);
-
 }
 
 function prettyList(data) {
   return _.filter(data, function(item) {
-		var url = item[12][0];
+    var url = item[12][0];
     return url !== null;
-	});
+  });
 }
 
 module.exports = exports = Socrata;
